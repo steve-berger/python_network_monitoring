@@ -21,9 +21,10 @@ def log_disruption(start_time, end_time, filepath="connectivity_log.csv"):
     with open(filepath, mode="a", newline="") as csvfile:
         writer = csv.writer(csvfile)
         if not file_exists:
-            # Write file headers
+            # Write headers if the file is new
             writer.writerow(["Start Interruption", "End Interruption"])
         writer.writerow([start_time, end_time])
+
 
 def monitor_connectivity():
     print("Monitoring internet connectivity. Press CTRL+C to stop.")
