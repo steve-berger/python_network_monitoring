@@ -9,7 +9,6 @@ def is_internet_available():
     """Check internet connectivity by pinging Google's DNS"""
     try: 
         subprocess.run(["ping", "-c", "1", "8.8.8.8"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
-        # print(f"{monitoring_test}")
         return True
     except Exception:
         return False
