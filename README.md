@@ -15,4 +15,4 @@ And I simply forget writing the times down for contacting my ISP and have someth
 
 MIT License
 
-Copyright (c) [2014] [fullname]
+Copyright (c) [year] [fullname]
