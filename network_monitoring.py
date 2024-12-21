@@ -8,22 +8,34 @@ import subprocess
 def is_internet_available():
     """Check internet connectivity by pinging Google's DNS"""
     try: 
-        monitoring_test = subprocess.run(["ping", "-c", "10", "8.8.8.8"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        print(f"{monitoring_test}")
+        subprocess.run(["ping", "-c", "1", "8.8.8.8"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
+        # print(f"{monitoring_test}")
         return True
     except Exception:
         return False
-     
-def log_disruption(start_time, end_time, filepath="connectivity_log.csv"):
-    # Check if the file exists
-    file_exists = os.path.isfile(filepath)
 
-    with open(filepath, mode="a", newline="") as csvfile:
-        writer = csv.writer(csvfile)
-        if not file_exists:
-            # Write headers if the file is new
-            writer.writerow(["Start Interruption", "End Interruption"])
-        writer.writerow([start_time, end_time])
+
+def log_disruption(start_time, end_time, file_path="connectivity_log.csv"):
+    try:
+        # Check if the file exists
+        file_exists = os.path.isfile(file_path)
+
+        # Open the file in write mode if it doesn't exist, otherwise append
+        mode = "w" if not file_exists else "a"
+
+        with open(file_path, mode=mode, newline="") as csvfile:
+            writer = csv.writer(csvfile)
+            
+            # If file is new, write the headers
+            if mode == "w":
+                print(f"Creating new CSV file: {file_path}")
+                writer.writerow(["Start Interruption", "End Interruption"])
+            
+            # Write the log entry
+            print(f"Logging: {start_time}, {end_time}")
+            writer.writerow([start_time, end_time])
+    except Exception as e:
+        print(f"Error writing to file: {e}")
 
 
 def monitor_connectivity():
